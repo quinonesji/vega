@@ -1,8 +1,5 @@
-import * as _ from 'underscore'; 
 import { Component, OnInit } from '@angular/core';
 import { VehicleService } from 'src/services/vehicle.service';
-
-import { SaveVehicle, Vehicle } from './../../models/vehicle';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -12,19 +9,8 @@ import { SaveVehicle, Vehicle } from './../../models/vehicle';
 export class VehicleFormComponent implements OnInit {
   makes: any[];
   models: any[];
-  features: any[];
-  vehicle: SaveVehicle = {
-    id: 0,
-    makeId: 0,
-    modelId: 0,
-    isRegistered: false,
-    features: [],
-    contact: {
-      name: '',
-      email: '',
-      phone: '',
-    }
-  };
+  features: any[]; 
+  vehicle: any = {};
 
   constructor(
     private vehicleService: VehicleService) { }
@@ -37,44 +23,8 @@ export class VehicleFormComponent implements OnInit {
     
   }
 
-  private setVehicle(v: Vehicle) {
-    this.vehicle.id = v.id;
-    this.vehicle.makeId = v.make.id;
-    this.vehicle.modelId = v.model.id;
-    this.vehicle.isRegistered = v.isRegistered;
-    this.vehicle.contact = v.contact;
-    this.vehicle.features = _.pluck(v.features, 'id');
-  } 
-
   onMakeChange() {
-    var selectedMake = this.makes.find(m => m.id == this.vehicle.makeId);
+    var selectedMake = this.makes.find(m => m.id == this.vehicle.make);
     this.models = selectedMake ? selectedMake.models : [];
   }
-
-  onFeatureToggle(featureId, $event) {
-    if ($event.target.checked)
-      this.vehicle.features.push(featureId);
-    else {
-      var index = this.vehicle.features.indexOf(featureId);
-      this.vehicle.features.splice(index, 1);
-    }
-  }
-
-  submit() {
-    console.log(this.vehicle);
-    // var result$ = (this.vehicle.id) ? this.vehicleService.update(this.vehicle) : this.vehicleService.create(this.vehicle);
-    // var result$ = this.vehicleService.create(this.vehicle); 
-    // result$.subscribe(vehicle => {
-    //   // console.log(vehicle);
-    //   // this.toastyService.success({
-    //   //   title: 'Success', 
-    //   //   msg: 'Data was sucessfully saved.',
-    //   //   theme: 'bootstrap',
-    //   //   showClose: true,
-    //   //   timeout: 5000
-    //   // });
-    //   // this.router.navigate(['/vehicles/', vehicle.id])
-    // });
-  }
-
 }
