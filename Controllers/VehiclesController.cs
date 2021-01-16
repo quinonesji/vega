@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using vega.Controllers.Resources;
-using vega.Models;
-using vega.Persistence;
+using vega.Core;
+using vega.Core.Models;
 
 namespace vega.Controllers
 {
@@ -56,6 +56,8 @@ namespace vega.Controllers
             vehicle.LastUpdate = DateTime.Now;
 
             await unitOfWork.CompleteAsync();
+
+            vehicle = await repository.GetVehicle(vehicle.Id);
             var result = mapper.Map<Vehicle, VehicleResource>(vehicle);
 
             return Ok(result);

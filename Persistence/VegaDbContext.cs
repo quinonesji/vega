@@ -1,6 +1,5 @@
-using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
-using vega.Models;
+using vega.Core.Models;
 
 namespace vega.Persistence
 {
