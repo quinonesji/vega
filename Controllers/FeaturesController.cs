@@ -9,22 +9,23 @@ using vega.Persistence;
 
 namespace vega.Controllers
 {
-  public class FeaturesController : Controller
-  {
-    private readonly VegaDbContext context;
-    private readonly IMapper mapper;
-    public FeaturesController(VegaDbContext context, IMapper mapper)
+    public class FeaturesController : Controller
     {
-      this.mapper = mapper;
-      this.context = context;
-    }
+        private readonly VegaDbContext _context;
+        private readonly IMapper _mapper;
 
-    [HttpGet("/api/features")]
-    public async Task<IEnumerable<FeatureResource>> GetFeatures()
-    {
-      var features = await context.Features.ToListAsync();
-      
-      return mapper.Map<List<Feature>, List<FeatureResource>>(features); 
+        public FeaturesController(VegaDbContext context, IMapper mapper)
+        {
+            this._context = context;
+            this._mapper = mapper;
+        }
+
+        [HttpGet("/api/features")]
+        public async Task<IEnumerable<KeyValuePairResource>> GetFeatures()
+        {
+            var features = await _context.Features.ToListAsync();
+            
+            return _mapper.Map<List<Feature>, List<KeyValuePairResource>>(features); 
+        }
     }
-  }
 }

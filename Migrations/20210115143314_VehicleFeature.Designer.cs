@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using vega.Persistence;
 
 namespace vega.Migrations
 {
     [DbContext(typeof(VegaDbContext))]
-    partial class VegaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210115143314_VehicleFeature")]
+    partial class VehicleFeature
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -89,16 +91,18 @@ namespace vega.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsRegistered")
+                    b.Property<int?>("FeatureId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("LastUpdate")
-                        .HasColumnType("TEXT");
+                    b.Property<bool>("IsRegistered")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int>("ModelId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("FeatureId");
 
                     b.HasIndex("ModelId");
 
@@ -133,6 +137,10 @@ namespace vega.Migrations
 
             modelBuilder.Entity("vega.Models.Vehicle", b =>
                 {
+                    b.HasOne("vega.Models.Feature", null)
+                        .WithMany("Vehicles")
+                        .HasForeignKey("FeatureId");
+
                     b.HasOne("vega.Models.Model", "Model")
                         .WithMany()
                         .HasForeignKey("ModelId")
@@ -159,6 +167,11 @@ namespace vega.Migrations
                     b.Navigation("Feature");
 
                     b.Navigation("Vehicle");
+                });
+
+            modelBuilder.Entity("vega.Models.Feature", b =>
+                {
+                    b.Navigation("Vehicles");
                 });
 
             modelBuilder.Entity("vega.Models.Make", b =>
