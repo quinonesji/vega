@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class VehicleService {
-  private readonly vehiclesEndpoint = '/api/vehicles';
 
   constructor(private http:HttpClient) { }
 
@@ -16,7 +15,7 @@ export class VehicleService {
   }
 
   create(vehicle) {
-    return this.http.post<any>(this.vehiclesEndpoint, vehicle);
+    return this.http.post<any>('/api/vehicles', vehicle);
   }
 
 }
