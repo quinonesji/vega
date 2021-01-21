@@ -32,6 +32,7 @@
     "oidc-client": "^1.9.1",
     "popper.js": "^1.16.0",
     "protractor": "~5.4.2",
+    "raven-js": "^3.27.2",
     "rxjs": "^6.5.3",
     "ts-node": "~8.4.1",
     "tslint": "~5.20.0",
