@@ -25,8 +25,19 @@ export class VehicleService {
     return this.http.get(this.vehiclesEndpoint + '/' + id);
   }
 
-  getVehicles() {
-    return this.http.get(this.vehiclesEndpoint);
+  getVehicles(filter) {
+    return this.http.get(this.vehiclesEndpoint + '?' + this.toQueryString(filter));
+  }
+
+  toQueryString(obj) {
+    var parts = [];
+    for (var property in obj) {
+      var value = obj[property];
+      if (value != null && value != undefined) 
+        parts.push(encodeURIComponent(property) + '=' + encodeURIComponent(value));
+    }
+
+    return parts.join('&');
   }
 
   update(vehicle: SaveVehicle) {
