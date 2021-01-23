@@ -15,6 +15,7 @@ import { FetchDataComponent } from './fetch-data/fetch-data.component';
 import { VehicleFormComponent } from './vehicle-form/vehicle-form.component';
 import { AppErrorHandler } from './app.error-handler';
 import { VehicleService } from 'src/services/vehicle.service';
+import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 
 Raven.config('https://69d77f18f60e4823b27fe4b5c1236bbf@o508257.ingest.sentry.io/5600631').install();
 
@@ -25,7 +26,8 @@ Raven.config('https://69d77f18f60e4823b27fe4b5c1236bbf@o508257.ingest.sentry.io/
     HomeComponent,
     CounterComponent,
     FetchDataComponent,
-    VehicleFormComponent
+    VehicleFormComponent,
+    VehicleListComponent
   ],
   imports: [
     BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
@@ -34,7 +36,8 @@ Raven.config('https://69d77f18f60e4823b27fe4b5c1236bbf@o508257.ingest.sentry.io/
     BrowserAnimationsModule,
     ToastrModule.forRoot({timeOut: 10000, closeButton: true }),
     RouterModule.forRoot([
-      { path: '', component: HomeComponent, pathMatch: 'full' },
+      { path: '', component: VehicleListComponent, pathMatch: 'full' },
+      { path: 'vehicles', component: VehicleListComponent },
       { path: 'counter', component: CounterComponent },
       { path: 'fetch-data', component: FetchDataComponent },
       { path: 'vehicles/:id', component: VehicleFormComponent },
