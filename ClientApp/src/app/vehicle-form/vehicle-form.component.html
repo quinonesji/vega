@@ -20,17 +20,17 @@
 
     <p>Is this vehicle registered?</p>
     <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="registered" name="isRegistered" class="custom-control-input" value="true" [(ngModel)] = "vehicle.isRegistered">
+        <input type="radio" id="registered" name="isRegistered" class="custom-control-input" [value]="true" [(ngModel)] = "vehicle.isRegistered">
         <label class="custom-control-label" for="registered">Yes</label>
     </div>
     <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="notRegistered" name="isRegistered" class="custom-control-input" value="false" [(ngModel)] = "vehicle.isRegistered">
+        <input type="radio" id="notRegistered" name="isRegistered" class="custom-control-input" [value]="false" [(ngModel)] = "vehicle.isRegistered">
         <label class="custom-control-label" for="notRegistered">No</label>
     </div>
 
     <h2>Features</h2>
     <div *ngFor="let f of features" class="form-group form-check">
-        <input class="form-check-input" type="checkbox" id="feature{{ f.id }}" (change)="onFeatureToggle(f.id, $event)">
+        <input class="form-check-input" type="checkbox" id="feature{{ f.id }}" (change)="onFeatureToggle(f.id, $event)" [checked]="vehicle.features.includes(f.id)">
         <label class="form-check-label" for="feature{{ f.id }}">
              {{ f.name }}
         </label>
