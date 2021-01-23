@@ -7,15 +7,19 @@ export class VehicleService {
   constructor(private http:HttpClient) { }
 
   getMakes() {
-    return this.http.get<any>('/api/makes');
+    return this.http.get('/api/makes');
   }
 
   getFeatures() {
-    return this.http.get<any>('/api/features');
+    return this.http.get('/api/features');
   }
 
   create(vehicle) {
-    return this.http.post<any>('/api/vehicles', vehicle);
+    return this.http.post('/api/vehicles', vehicle);
+  }
+
+  getVehicle(id) {
+    return this.http.get('/api/vehicles/' + id);
   }
 
 }

@@ -16,6 +16,6 @@ namespace vega.Controllers.Resources
         public SaveVehicleResource()
         {
             Features = new Collection<int>();
-        }        
+        }
     }
 }
