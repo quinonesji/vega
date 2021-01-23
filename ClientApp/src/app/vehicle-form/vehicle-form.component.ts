@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { VehicleService } from 'src/services/vehicle.service';
 import { forkJoin } from 'rxjs';
 import { SaveVehicle, Vehicle } from 'src/models/vehicle';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-vehicle-form',
@@ -30,7 +31,8 @@ export class VehicleFormComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private vehicleService: VehicleService) {
+    private vehicleService: VehicleService,
+    private toastrService: ToastrService) {
       route.params.subscribe(p => {
         this.vehicle.id = +p['id'];
       });
@@ -85,8 +87,17 @@ export class VehicleFormComponent implements OnInit {
   }
   
   submit() {
-    this.vehicleService.create(this.vehicle)
-      .subscribe(x => console.log(x));
+    if (this.vehicle.id) {
+      this.vehicleService.update(this.vehicle)
+        .subscribe(x => {
+          this.toastrService.success("The vehicle was successfully updated.", "Success");
+        });
+    }
+    else {
+      this.vehicleService.create(this.vehicle)
+        .subscribe(x => console.log(x));
+
+    }
   }
 
   onMakeChange() {
