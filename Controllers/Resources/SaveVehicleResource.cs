@@ -6,7 +6,7 @@ namespace vega.Controllers.Resources
 {
     public class SaveVehicleResource
     {
-        public int? Id { get; set; }
+        public int Id { get; set; }
         public int ModelId { get; set; }
         public bool IsRegistered { get; set; }
         [Required]
@@ -16,6 +16,6 @@ namespace vega.Controllers.Resources
         public SaveVehicleResource()
         {
             Features = new Collection<int>();
-        }
+        }        
     }
 }

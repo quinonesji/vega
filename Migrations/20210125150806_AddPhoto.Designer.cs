@@ -2,15 +2,17 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using vega.Persistence;
 
 namespace vega.Migrations
 {
     [DbContext(typeof(VegaDbContext))]
-    partial class VegaDbContextModelSnapshot : ModelSnapshot
+    [Migration("20210125150806_AddPhoto")]
+    partial class AddPhoto
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -80,7 +82,7 @@ namespace vega.Migrations
                         .HasMaxLength(255)
                         .HasColumnType("TEXT");
 
-                    b.Property<int>("VehicleId")
+                    b.Property<int?>("VehicleId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -154,13 +156,9 @@ namespace vega.Migrations
 
             modelBuilder.Entity("vega.Core.Models.Photo", b =>
                 {
-                    b.HasOne("vega.Core.Models.Vehicle", "Vehicle")
+                    b.HasOne("vega.Core.Models.Vehicle", null)
                         .WithMany("Photos")
-                        .HasForeignKey("VehicleId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Vehicle");
+                        .HasForeignKey("VehicleId");
                 });
 
             modelBuilder.Entity("vega.Core.Models.Vehicle", b =>

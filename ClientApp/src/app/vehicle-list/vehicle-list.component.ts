@@ -6,10 +6,12 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: 'vehicle-list.component.html'
 })
 export class VehicleListComponent implements OnInit {
-  vehicles: Vehicle[];
+  private readonly PAGE_SIZE = 3; 
+
+  queryResult: any = {};
   makes: KeyValuePair[];
   query: any = {
-    pageSize: 3
+    pageSize: this.PAGE_SIZE
   };
   columns = [
     { title: 'Make', key: 'make', isSortable: true },
@@ -33,12 +35,15 @@ export class VehicleListComponent implements OnInit {
 
   private populateVehicles() {
     this.vehicleService.getVehicles(this.query)
-      .subscribe((vehicles: Vehicle[]) => this.vehicles = vehicles);
+      .subscribe((result: any[]) => this.queryResult = result);
   }
 
   resetFilter() {
-    this.query = {};
-    this.onFilterChange();
+    this.query = {
+      page: 1,
+      pageSize: this.PAGE_SIZE
+    };
+    this.populateVehicles();
   }
 
   sortBy(columnName) {

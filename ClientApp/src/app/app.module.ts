@@ -1,8 +1,8 @@
 import * as Raven from 'raven-js'; 
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, XhrFactory } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';    
 import { ToastrModule } from 'ngx-toastr';  
@@ -17,6 +17,9 @@ import { AppErrorHandler } from './app.error-handler';
 import { VehicleService } from 'src/services/vehicle.service';
 import { VehicleListComponent } from './vehicle-list/vehicle-list.component';
 import { PaginationComponent } from 'src/shared/pagination.component';
+import { ViewVehicleComponent } from './view-vehicle/view-vehicle.component';
+import { PhotoService } from 'src/services/photo.service';
+import { XhrFactoryWithProgress, ProgressService } from 'src/services/progress.service';
 
 Raven.config('https://69d77f18f60e4823b27fe4b5c1236bbf@o508257.ingest.sentry.io/5600631').install();
 
@@ -29,6 +32,7 @@ Raven.config('https://69d77f18f60e4823b27fe4b5c1236bbf@o508257.ingest.sentry.io/
     FetchDataComponent,
     VehicleFormComponent,
     VehicleListComponent,
+    ViewVehicleComponent,
     PaginationComponent
   ],
   imports: [
@@ -39,15 +43,17 @@ Raven.config('https://69d77f18f60e4823b27fe4b5c1236bbf@o508257.ingest.sentry.io/
     ToastrModule.forRoot({timeOut: 10000, closeButton: true }),
     RouterModule.forRoot([
       { path: '', component: VehicleListComponent, pathMatch: 'full' },
+      { path: 'vehicles/new', component: VehicleFormComponent },
+      { path: 'vehicles/edit/:id', component: VehicleFormComponent },
+      { path: 'vehicles/:id', component: ViewVehicleComponent },
       { path: 'vehicles', component: VehicleListComponent },
       { path: 'counter', component: CounterComponent },
-      { path: 'fetch-data', component: FetchDataComponent },
-      { path: 'vehicles/:id', component: VehicleFormComponent },
-      { path: 'vehicles/new', component: VehicleFormComponent }
+      { path: 'fetch-data', component: FetchDataComponent }
     ])
   ],
   providers: [{ provide: ErrorHandler, useClass: AppErrorHandler },
-    VehicleService],
+    { provide: XhrFactory, useClass: XhrFactoryWithProgress },
+    VehicleService, PhotoService, ProgressService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
